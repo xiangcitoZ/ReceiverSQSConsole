@@ -29,6 +29,7 @@ else
         Console.WriteLine("Email: " + data.Email);
         Console.WriteLine("Contenido: " + data.Contenido);
         Console.WriteLine("Fecha: " + data.Fecha);
+        await service.DeleteMessageAsync(data.ReceiptHandle);
         Console.WriteLine("-------END--------");
     }
     Console.WriteLine("Fin de lectura de mensajes");

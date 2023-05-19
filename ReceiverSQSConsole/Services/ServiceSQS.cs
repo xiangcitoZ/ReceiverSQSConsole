@@ -42,6 +42,7 @@ namespace ReceiverSQSConsole.Services
                         string json = msj.Body;
                         Mensaje data = 
                             JsonConvert.DeserializeObject<Mensaje>(json);
+                        data.ReceiptHandle = msj.ReceiptHandle;
                         output.Add(data);
                     }
                     return output;
@@ -55,6 +56,17 @@ namespace ReceiverSQSConsole.Services
             {
                 return null;
             }
+        }
+
+        public async Task DeleteMessageAsync(string receiptHandle)
+        {
+            DeleteMessageRequest request = new DeleteMessageRequest
+            {
+                QueueUrl = this.UrlQueue,
+                ReceiptHandle = receiptHandle
+            };
+            DeleteMessageResponse response =
+                await this.amazonSQS.DeleteMessageAsync(request);
         }
 
 
